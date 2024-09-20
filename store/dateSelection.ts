@@ -1,12 +1,18 @@
-// store/dateSelection.ts
 import { defineStore } from 'pinia';
 
+interface DateSelectionState {
+    startDate: string;
+    endDate: string;
+    timeSlots: string[];
+    selectedTimeSlot: string | null;
+}
+
 export const useDateSelectionStore = defineStore('dateSelection', {
-    state: () => ({
+    state: (): DateSelectionState => ({
         startDate: '',
         endDate: '',
-        timeSlots: [] as string[],
-        selectedTimeSlot: null as string | null,
+        timeSlots: [],
+        selectedTimeSlot: null,
     }),
     actions: {
         setStartDate(date: string) {

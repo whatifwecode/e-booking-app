@@ -1,0 +1,8 @@
+{
+  "greeting": "Tere tulemast",
+  "select_service": "Valige teenus ja arst",
+  "start_date": "Alguskuupäev",
+  "end_date": "Lõppkuupäev",
+  "available_time_slots": "Saadaval ajavahemikud",
+  "no_appointments": "Kohti ei ole, siin on mõned alternatiivid:"
+}

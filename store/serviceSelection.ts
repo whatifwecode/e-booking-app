@@ -4,7 +4,7 @@ interface AppointmentState {
     selectedDoctor: string;
 }
 
-export const useAppointmentStore = defineStore('appointment', {
+export const useServiceSelectionStore = defineStore('serviceSelection', {
     state: (): AppointmentState => ({
         selectedService: '',
         selectedDoctor: '',

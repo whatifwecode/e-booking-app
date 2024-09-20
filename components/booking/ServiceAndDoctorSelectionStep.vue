@@ -20,30 +20,29 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineEmits, watch } from 'vue';
-import { useAppointmentStore } from '~/store/appointment';
-import { services, getDoctorsByService } from '~/services/mockData';
+import { ref, defineEmits, onMounted } from 'vue';
+import { useServiceSelectionStore } from '~/store/serviceSelection';
+import { fetchServices, fetchDoctorsByService } from '~/services/mockApi'; // Import the mock API service
 import IModalContainer from "~/components/shared/IModalContainer.vue";
 import IButton from "~/components/shared/IButton.vue";
 
 const emit = defineEmits();
-const store = useAppointmentStore(); // Create a store instance
+const store = useServiceSelectionStore();
 
-const selectedService = ref(store.selectedService); // Bind to store
-const selectedDoctor = ref(store.selectedDoctor); // Bind to store
-const doctors = ref([]);
+const selectedService = ref(store.selectedService);
+const selectedDoctor = ref(store.selectedDoctor);
+const services = ref<Service[]>([]);
+const doctors = ref<Doctor[]>([]);
 
-watch(selectedService, (newValue) => {
-  store.setService(newValue); // Update store when selectedService changes
-  doctors.value = getDoctorsByService(newValue);
+onMounted(async () => {
+  services.value = await fetchServices();
 });
 
-watch(selectedDoctor, (newValue) => {
-  store.setDoctor(newValue); // Update store when selectedDoctor changes
-});
-
-const onServiceChange = () => {
-  doctors.value = getDoctorsByService(selectedService.value);
+const onServiceChange = async () => {
+  if (selectedService.value) {
+    store.setService(selectedService.value);
+    doctors.value = await fetchDoctorsByService(selectedService.value);
+  }
 };
 
 const next = () => {

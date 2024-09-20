@@ -1,0 +1,8 @@
+{
+  "greeting": "Welcome",
+  "select_service": "Select Service and Doctor",
+  "start_date": "Start Date",
+  "end_date": "End Date",
+  "available_time_slots": "Available Time Slots:",
+  "no_appointments": "No appointments available. Here are some alternatives:"
+}

@@ -2,7 +2,6 @@
   <transition name="fade">
     <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50" v-if="isVisible">
       <div class="bg-white rounded-lg shadow-lg p-4 w-1/4 border-2 border-theme-light-blue">
-        <h3 class="text-lg font-bold text-center">No Appointments Available</h3>
         <p class="mt-2 text-center">{{ message }}</p>
         <div class="flex justify-end mt-4">
           <button @click="close" class="text-gray-500 hover:text-gray-800">✖</button>

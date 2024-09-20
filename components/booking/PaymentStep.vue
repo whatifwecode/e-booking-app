@@ -23,13 +23,13 @@
       <span v-if="cvvError && !cvv" class="text-red-500 text-sm">CVV is required</span>
     </div>
     <div class="flex flex-col mt-1.5">
-      <IButton text="Pay" :disabled="!isFormValid" />
+      <IButton text="Pay" :disabled="!isFormValid" @click="pay"/>
     </div>
   </IModalContainer>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, defineEmits } from 'vue';
 import IModalContainer from "~/components/shared/IModalContainer.vue";
 import IButton from "~/components/shared/IButton.vue";
 
@@ -40,9 +40,10 @@ const cardNumberError = ref(false);
 const expiryDateError = ref(false);
 const cvvError = ref(false);
 
+const emit = defineEmits();
+
 const pay = () => {
   if (isFormValid.value) {
-    // Proceed to the next step only if the form is valid (all fields have values)
     emit('nextStep');
   } else {
     cardNumberError.value = !cardNumber.value;
@@ -51,7 +52,6 @@ const pay = () => {
   }
 };
 
-// Check if all fields have values
 const isFormValid = computed(() => {
   return cardNumber.value && expiryDate.value && cvv.value;
 });

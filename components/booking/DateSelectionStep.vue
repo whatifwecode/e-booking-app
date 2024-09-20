@@ -37,8 +37,9 @@
 
 <script setup lang="ts">
 import { ref, computed, defineEmits } from 'vue';
-import MessageService from './shared/IMessage.vue';
+import MessageService from '../shared/IMessage.vue';
 import { useDateSelectionStore } from '~/store/dateSelection';
+import { fetchTimeSlotsFromApi } from '~/services/timeSlotService'; // Import the time slot service
 import IModalContainer from "~/components/shared/IModalContainer.vue";
 import IButton from "~/components/shared/IButton.vue";
 
@@ -66,27 +67,6 @@ const showMessage = ref(false);
 const fallbackMessage = 'No appointments available for the selected date range. Here are some alternatives:';
 
 // Fetch time slots with fallback logic
-const fetchTimeSlotsFromApi = (start: string, end: string) => {
-  return new Promise<string[]>((resolve) => {
-    setTimeout(() => {
-      const availableSlots: string[] = [];
-      const mockTimeSlots = {
-        '2024-09-21': ['09:00 - 09:30', '10:00 - 10:30', '11:00 - 11:30'],
-        '2024-09-22': ['13:00 - 13:30', '14:00 - 14:30', '15:00 - 15:30'],
-        '2024-09-23': ['09:00 - 09:30', '10:30 - 11:00', '14:00 - 14:30'],
-        '2024-09-15': ['09:00 - 09:30', '10:00 - 10:30'],
-        '2024-09-29': ['11:00 - 11:30', '14:00 - 14:30'],
-      };
-      for (const date in mockTimeSlots) {
-        if (date >= start && date <= end) {
-          availableSlots.push(...mockTimeSlots[date].map(slot => `${date} ${slot}`));
-        }
-      }
-      resolve(availableSlots);
-    }, 1000);
-  });
-};
-
 const fetchTimeSlots = async () => {
   if (startDate.value && endDate.value) {
     const slots = await fetchTimeSlotsFromApi(startDate.value, endDate.value);

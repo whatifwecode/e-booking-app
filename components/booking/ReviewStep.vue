@@ -2,9 +2,9 @@
   <IModalContainer>
     <h2 class="text-lg font-bold text-center">Review Information</h2>
     <div>
-      <p><strong>Service:</strong> {{ selectedService }}</p>
-      <p><strong>Doctor:</strong> {{ selectedDoctor }}</p>
-      <p><strong>Appointment:</strong> {{ selectedTimeSlot }}</p>
+      <p><strong>Service:</strong> {{ reviewData.service }}</p>
+      <p><strong>Doctor:</strong> {{ reviewData.doctor }}</p>
+      <p><strong>Appointment:</strong> {{ reviewData.timeSlot }}</p>
     </div>
     <div class="flex flex-col gap-1 mt-1.5">
       <IButton text="Back" @click="$emit('prevStep')"/>
@@ -14,19 +14,15 @@
 </template>
 
 <script setup lang="ts">
-import { useAppointmentStore } from '~/store/appointment';
+import { useAppointmentReviewStore } from '~/store/appointmentReview';
 import { defineEmits } from 'vue';
 import IModalContainer from "~/components/shared/IModalContainer.vue";
 import IButton from "~/components/shared/IButton.vue";
-import {useDateSelectionStore} from "~/store/dateSelection";
 
 const emit = defineEmits();
 
-const  selectedServiceStore = useAppointmentStore();
-const selectedTimeSlotStore = useDateSelectionStore();
-
-const { selectedTimeSlot } = selectedTimeSlotStore;
-const { selectedService, selectedDoctor } = selectedServiceStore;
+const appointmentReviewStore = useAppointmentReviewStore();
+const reviewData = appointmentReviewStore.reviewData;
 
 const next = () => {
   emit('nextStep');

@@ -14,9 +14,6 @@
 import IButton from "~/components/shared/IButton.vue";
 import IModalContainer from "~/components/shared/IModalContainer.vue";
 
-const navigateTo = (path: string) => {
-  navigateTo(path);
-};
 
 const openEbooking = () => {
   navigateTo('/booking');
