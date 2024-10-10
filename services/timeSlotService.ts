@@ -1,6 +1,4 @@
-// ~/services/timeSlotService.ts
-
-const mockTimeSlots = {
+const mockTimeSlots: { [key: string]: string[] } = {
     '2024-09-21': ['09:00 - 09:30', '10:00 - 10:30', '11:00 - 11:30'],
     '2024-09-22': ['13:00 - 13:30', '14:00 - 14:30', '15:00 - 15:30'],
     '2024-09-23': ['09:00 - 09:30', '10:30 - 11:00', '14:00 - 14:30'],
@@ -18,6 +16,6 @@ export const fetchTimeSlotsFromApi = async (start: string, end: string): Promise
                 }
             }
             resolve(availableSlots);
-        }, 1000); // Simulate network delay
+        }, 1000);
     });
 };

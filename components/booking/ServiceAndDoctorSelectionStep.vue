@@ -20,15 +20,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineEmits, onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useServiceSelectionStore } from '~/store/serviceSelection';
-import { fetchServices, fetchDoctorsByService } from '~/services/mockApi'; // Import the mock API service
+import {fetchServices, fetchDoctorsByService, type Service, type Doctor} from '~/services/mockApi';
 import IModalContainer from "~/components/shared/IModalContainer.vue";
 import IButton from "~/components/shared/IButton.vue";
+import {useBookingStepStore} from "~/store/bookingStep";
 
 const emit = defineEmits();
 const store = useServiceSelectionStore();
-
 const selectedService = ref(store.selectedService);
 const selectedDoctor = ref(store.selectedDoctor);
 const services = ref<Service[]>([]);
@@ -47,6 +47,7 @@ const onServiceChange = async () => {
 
 const next = () => {
   if (selectedDoctor.value) {
+    store.setDoctor(selectedDoctor.value);
     emit('nextStep');
   }
 };

@@ -36,7 +36,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, defineEmits } from 'vue';
+import { ref, computed } from 'vue';
 import MessageService from '../shared/IMessage.vue';
 import { useDateSelectionStore } from '~/store/dateSelection';
 import { fetchTimeSlotsFromApi } from '~/services/timeSlotService'; // Import the time slot service
@@ -66,7 +66,6 @@ const hoveredSlot = ref<string | null>(null);
 const showMessage = ref(false);
 const fallbackMessage = 'No appointments available for the selected date range. Here are some alternatives:';
 
-// Fetch time slots with fallback logic
 const fetchTimeSlots = async () => {
   if (startDate.value && endDate.value) {
     const slots = await fetchTimeSlotsFromApi(startDate.value, endDate.value);

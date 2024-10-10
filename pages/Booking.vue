@@ -1,14 +1,15 @@
 <template>
-    <component :is="currentStepComponent" @nextStep="nextStep" @prevStep="prevStep" />
+  <component :is="currentStepComponent" @nextStep="nextStep" @prevStep="prevStep" />
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { computed, onMounted, watch } from 'vue';
+import { useBookingStepStore } from '~/store/bookingStep';
 import ServiceStep from '~/components/booking/ServiceAndDoctorSelectionStep.vue';
 import DateSelectionStep from '~/components/booking/DateSelectionStep.vue';
 import ReviewStep from '~/components/booking/ReviewStep.vue';
 import PaymentStep from '~/components/booking/PaymentStep.vue';
-import AppointmentConfirmation from "~/components/booking/AppointmentConfirmation.vue";
+import AppointmentConfirmation from '~/components/booking/AppointmentConfirmation.vue';
 
 const steps = [
   ServiceStep,
@@ -18,21 +19,32 @@ const steps = [
   AppointmentConfirmation
 ];
 
-const currentStepIndex = ref(0);
+const bookingStepStore = useBookingStepStore();
+const currentStepIndex = computed(() => bookingStepStore.currentStep);
+
+onMounted(() => {
+  bookingStepStore.$reset();
+  // bookingStepStore.loadStep();
+  console.log('Loaded step on mounted:', currentStepIndex.value);
+});
+
+watch(currentStepIndex, (newValue, oldValue) => {
+  console.log(`Step changed from ${oldValue} to ${newValue}`);
+});
 
 const nextStep = () => {
+  console.log('Current step before next:', currentStepIndex.value);
   if (currentStepIndex.value < steps.length - 1) {
-    currentStepIndex.value += 1;
+    bookingStepStore.setStep(currentStepIndex.value + 1);
+    console.log('Stepped to:', currentStepIndex.value + 1);
   }
 };
 
 const prevStep = () => {
   if (currentStepIndex.value > 0) {
-    currentStepIndex.value -= 1;
+    bookingStepStore.setStep(currentStepIndex.value - 1);
   }
 };
 
-const currentStepComponent = computed(() => {
-  return steps[currentStepIndex.value];
-});
+const currentStepComponent = computed(() => steps[currentStepIndex.value]);
 </script>

@@ -4,5 +4,10 @@
   "start_date": "Alguskuupäev",
   "end_date": "Lõppkuupäev",
   "available_time_slots": "Saadaval ajavahemikud",
-  "no_appointments": "Kohti ei ole, siin on mõned alternatiivid:"
+  "no_appointments": "Kohti ei ole, siin on mõned alternatiivid:",
+  "e_booking": "E-broneering",
+  "history": "Ajalugu",
+  "receipts": "Kviitungid",
+  "faq": "KKK",
+  "Home": "Kodu"
 }

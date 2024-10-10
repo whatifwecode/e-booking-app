@@ -1,4 +1,3 @@
-// plugins/pinia.ts
 import { defineNuxtPlugin } from '#app';
 import { createPinia } from 'pinia';
 

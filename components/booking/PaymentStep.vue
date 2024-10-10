@@ -29,7 +29,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, defineEmits } from 'vue';
+import { ref, computed } from 'vue';
 import IModalContainer from "~/components/shared/IModalContainer.vue";
 import IButton from "~/components/shared/IButton.vue";
 

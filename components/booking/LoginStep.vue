@@ -1,85 +1,100 @@
 <template>
   <IModalContainer>
-    <h2 class="text-lg font-bold text-center">{{ isRegistering ? 'Register' : 'Login' }}</h2>
-    <div v-if="!isRegistering">
-      <div>
-        <label for="email" class="block text-sm font-medium">Email</label>
-        <input type="email" id="email" v-model="email" class="mt-1 block w-full px-3 py-2 border rounded-md" />
-      </div>
-      <div>
-        <label for="password" class="block text-sm font-medium">Password</label>
-        <input type="password" id="password" v-model="password" class="mt-1 block w-full px-3 py-2 border rounded-md" />
-      </div>
-      <div class="flex flex-col gap-1 mt-1.5">
-        <IButton :text="'Next'" :disabled="!isLoginValid" @click="login" />
-        <IButton :text="'Foreign User'" @click="toggleRegistering" />
+    <h2 class="text-lg font-bold text-center">{{ isRegistering ? t('register') : t('login') }}</h2>
+    <div class="flex justify-between items-baseline" v-if="!isRegistering">
+      <EstELogin />
+      <div class="w-full">
+        <div class="mb-3">
+          <label for="email" class="block text-sm font-medium">Email</label>
+          <div class="relative">
+            <i class="fas fa-envelope absolute left-3 top-1/2 transform -translate-y-1/2"></i>
+            <input type="email" id="email" v-model="email" :class="{'border-red-500': !email}" class="mt-1 block w-full px-10 py-2 border rounded-md transition duration-200" />
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="password" class="block text-sm font-medium">Password</label>
+          <div class="relative">
+            <i class="fas fa-lock absolute left-3 top-1/2 transform -translate-y-1/2"></i>
+            <input type="password" id="password" v-model="password" :class="{'border-red-500': !password}" class="mt-1 block w-full px-10 py-2 border rounded-md transition duration-200" />
+          </div>
+        </div>
+        <div class="flex flex-col gap-2 mt-1.5">
+          <IButton :text="t('next')" :disabled="!isLoginValid" @click="login" />
+          <IButton :text="t('foreignUser')" @click="toggleRegistering" />
+        </div>
       </div>
     </div>
 
     <div v-else>
-      <div>
-        <label for="fullName" class="block text-sm font-medium">Full Name</label>
-        <input type="text" id="fullName" v-model="fullName" class="mt-1 block w-full px-3 py-2 border rounded-md" />
-      </div>
-      <div>
-        <label for="phone" class="block text-sm font-medium">Phone Number</label>
-        <input type="tel" id="phone" v-model="phone" class="mt-1 block w-full px-3 py-2 border rounded-md" />
-      </div>
-      <div>
-        <label for="regEmail" class="block text-sm font-medium">Email</label>
-        <input type="email" id="regEmail" v-model="regEmail" class="mt-1 block w-full px-3 py-2 border rounded-md" />
-      </div>
-      <div>
-        <label for="idNumber" class="block text-sm font-medium">ID Number</label>
-        <input type="text" id="idNumber" v-model="idNumber" class="mt-1 block w-full px-3 py-2 border rounded-md" />
-      </div>
-      <div class="flex flex-col gap-1 mt-1.5">
-        <IButton :text="'Next'" :disabled="!isRegistrationValid" @click="register" />
-        <IButton :text="'Back To Login'" @click="toggleRegistering" />
-      </div>
+      <RegistrationForm
+          :isRegistering="isRegistering"
+          :toggleRegistering="toggleRegistering"
+          :register="register"
+          :isRegistrationValid="isRegistrationValid"
+          :registrationData="registrationData"
+      />
     </div>
 
-    <IMessage v-if="showMessage" :message="fallbackMessage" :isVisible="showMessage" @close="showMessage = false" />
+    <IMessage v-if="isMessageVisible" :message="messageContent" :isVisible="isMessageVisible" @close="hideMessage" />
   </IModalContainer>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, defineEmits } from 'vue';
+import { ref, computed } from 'vue';
 import { useRegistrationStore } from '~/store/registration';
 import IMessage from "~/components/shared/IMessage.vue";
 import IButton from "~/components/shared/IButton.vue";
 import IModalContainer from "~/components/shared/IModalContainer.vue";
+import EstELogin from "~/components/login/EstELogin.vue";
+import RegistrationForm from "~/components/login/RegistrationForm.vue";
+import { useNuxtApp } from "#app";
+import { useI18n } from 'vue-i18n';
 
-const emit = defineEmits();
+interface RegistrationData {
+  fullName: string;
+  phone: string;
+  email: string;
+  idNumber: string;
+}
+
 const store = useRegistrationStore();
+const { t } = useI18n();
+const { $showMessageFn } = useNuxtApp();
 
 const email = ref('');
 const password = ref('');
-const fullName = ref('');
-const phone = ref('');
-const regEmail = ref('');
-const idNumber = ref('');
-
-const fallbackMessage = ref('');
-const showMessage = ref(false);
+const messageContent = ref('');
+const isMessageVisible = ref(false);
 const isRegistering = ref(false);
 
+const registrationData = ref<RegistrationData>({
+  fullName: '',
+  phone: '',
+  email: '',
+  idNumber: '',
+});
+
+const isRegistrationValid = computed(() => {
+  return (
+      !!registrationData.value.fullName &&
+      !!registrationData.value.phone &&
+      !!registrationData.value.email &&
+      !!registrationData.value.idNumber
+  );
+});
+
+const hideMessage = () => {
+  isMessageVisible.value = false;
+};
+
 const login = () => {
-  showMessage.value = true;
-  fallbackMessage.value = 'Login Successful';
+  $showMessageFn('Login Successful');
   navigateTo('/dashboard');
 };
 
 const register = () => {
-  store.setRegistrationData({
-    fullName: fullName.value,
-    phone: phone.value,
-    email: regEmail.value,
-    idNumber: idNumber.value,
-  });
-
-  showMessage.value = true;
-  fallbackMessage.value = 'Registration Successful';
+  store.setRegistrationData(registrationData.value);
+  $showMessageFn('Registration Successful');
   navigateTo('/dashboard');
 };
 
@@ -90,9 +105,4 @@ const toggleRegistering = () => {
 const isLoginValid = computed(() => {
   return email.value && password.value;
 });
-
-const isRegistrationValid = computed(() => {
-  return fullName.value && phone.value && regEmail.value && idNumber.value;
-});
 </script>
-

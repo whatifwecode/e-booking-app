@@ -1,35 +1,32 @@
 <template>
   <button
-      :type="type"
+      :type="buttonType"
       :disabled="disabled"
       @click="onClick"
       :class="[
-      'py-2 px-4 rounded-md text-white transition-colors duration-200',
-      disabled ? 'bg-gray-300' : 'bg-theme-light-blue hover:bg-theme-dark-blue',
+      'py-2 px-4 rounded-md text-white transition-colors duration-200 shadow-lg',
+      disabled ? 'bg-gray-300' : 'bg-gradient-to-r from-[#749513] via-[#97bf0d] to-[#81a510be] hover:opacity-80',
     ]"
   >
-    {{ text }}
+    {{ translatedText }}
   </button>
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 const props = defineProps<{
   text: string;
-  type?: string;
+  buttonType?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
 }>();
 
 const emit = defineEmits(['click']);
-
+const { t } = useI18n();
+const translatedText = computed(() => t(props.text));
 const onClick = () => {
   if (!props.disabled) {
     emit('click');
   }
 };
 </script>
-
-<style scoped>
-/* Add any custom styles here */
-</style>

@@ -9,7 +9,7 @@ const translations: Record<string, Record<string, string>> = {
 };
 
 const getBrowserLanguage = (): string => {
-    const lang = navigator.language || navigator.userLanguage;
+    const lang = navigator.language;
     return lang.split('-')[0];
 };
 
