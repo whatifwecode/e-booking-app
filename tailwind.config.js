@@ -13,7 +13,7 @@ module.exports = {
         'theme-light-green': '#a8d5ba',
         'theme-light-blue': '#a2d2ff',
         "vtd-primary": colors.sky,
-        "vtd-secondary": colors.gray,
+        "vtd-secondary": colors.white
       },
     },
   },
