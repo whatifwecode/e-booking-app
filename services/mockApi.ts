@@ -27,7 +27,6 @@ export const services: Service[] = [
     { id: 7, name: 'Füsioterapeudid', icon: 'fas fa-running', description: 'Füüsilise taastusravi teenused.' },
     { id: 8, name: 'Kardioloogid', icon: 'fas fa-heartbeat', description: 'Südame tervise jälgimine.' },
     { id: 9, name: 'Nahaarstid', icon: 'fas fa-sun', description: 'Naha tervise spetsialistid.' },
-    { id: 10, name: 'Oftalmoloogid', icon: 'fas fa-glasses', description: 'Nägemise kontroll ja ravi.' },
 ];
 
 export const doctors: { [key: string]: Doctor[] } = {

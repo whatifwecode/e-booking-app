@@ -12,7 +12,7 @@ module.exports = {
       colors: {
         'theme-light-green': '#a8d5ba',
         'theme-light-blue': '#a2d2ff',
-        "vtd-primary": colors.sky,
+        "vtd-primary": colors.green,
         "vtd-secondary": colors.white
       },
     },
