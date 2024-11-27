@@ -1,10 +1,9 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
   modules: ['@nuxtjs/tailwindcss', '@nuxtjs/google-fonts', '@nuxtjs/i18n'],
   css: ['~/assets/css/tailwind.css', '@fortawesome/fontawesome-free/css/all.min.css'],
-  plugins: ['~/plugins/pinia.ts'],
+  plugins: ['~/plugins/pinia.ts', '~/plugins/vue-tailwind-datepicker.ts'],
   googleFonts: {
     families: {
       Montserrat: [300, 400, 500, 700],
@@ -18,7 +17,6 @@ export default defineNuxtConfig({
       { code: 'ru', name: 'Russian', iso: 'ru-RU', file: 'ru.json' }
     ],
     defaultLocale: 'en',
-    // lazy: true, // TODO make it work
     langDir: 'locales/',
     detectBrowserLanguage: {
       useCookie: true, // or use 'localStorage'
@@ -26,5 +24,5 @@ export default defineNuxtConfig({
       alwaysRedirect: false,
       fallbackLocale: 'en',
     }
-  },
-})
+  }
+});

@@ -6,6 +6,7 @@
 import { computed, onMounted, watch } from 'vue';
 import { useBookingStepStore } from '~/store/bookingStep';
 import ServiceStep from '~/components/booking/ServiceAndDoctorSelectionStep.vue';
+import ServiceDetailStep from "~/components/booking/ServiceDetail.vue";
 import DateSelectionStep from '~/components/booking/DateSelectionStep.vue';
 import ReviewStep from '~/components/booking/ReviewStep.vue';
 import PaymentStep from '~/components/booking/PaymentStep.vue';
@@ -13,6 +14,7 @@ import AppointmentConfirmation from '~/components/booking/AppointmentConfirmatio
 
 const steps = [
   ServiceStep,
+  ServiceDetailStep,
   DateSelectionStep,
   ReviewStep,
   PaymentStep,
