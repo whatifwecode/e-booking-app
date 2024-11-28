@@ -73,3 +73,12 @@ bun run preview
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+
+## Local Server to Share
+```bash
+npm run build
+
+npm run generate
+
+npx http-server ./dist
+
