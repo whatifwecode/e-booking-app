@@ -63,11 +63,11 @@ const openFAQ = () => {
 
 <style scoped>
 .bg-light-blue {
-  background-color: #e0f7fa; /* Light blue */
+  background-color: #e0f7fa;
 }
 
 .bg-light-green {
-  background-color: #e8f5e9; /* Light green */
+  background-color: #e8f5e9;
 }
 
 .icon-color {

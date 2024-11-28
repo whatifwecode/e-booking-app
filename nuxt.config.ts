@@ -19,15 +19,15 @@ export default defineNuxtConfig({
     defaultLocale: 'en',
     langDir: 'locales/',
     detectBrowserLanguage: {
-      useCookie: true, // or use 'localStorage'
+      useCookie: true,
       cookieKey: 'i18n_redirected',
       alwaysRedirect: false,
       fallbackLocale: 'en',
     },
-    nitro: {
-      prerender: {
-        failOnError: false,
-      },
+  },
+  nitro: {
+    prerender: {
+      failOnError: false,
     },
-  }
+  },
 });
