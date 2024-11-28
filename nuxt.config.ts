@@ -1,4 +1,7 @@
 export default defineNuxtConfig({
+  app: {
+    baseURL: process.env.BASE_URL || '/',
+  },
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
   modules: ['@nuxtjs/tailwindcss', '@nuxtjs/google-fonts', '@nuxtjs/i18n'],
